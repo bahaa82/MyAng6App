@@ -41,4 +41,8 @@ export class ProductListComponent implements OnInit{
         console.log('In OnInit');
     }
 
+    onRatingClicked(message:string):void{
+      this.panelTitle = "Product List: " + message;
+    }
+
   }

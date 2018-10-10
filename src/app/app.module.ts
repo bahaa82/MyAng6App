@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { ProductListComponent }  from './products/product-list.component';
 import { ProductFilterPipe }  from './products/product-filter.pipe';
 import { StarComponent }  from './shared/star.component';
-
 import { AppComponent } from './app.component';
 
 @NgModule({
