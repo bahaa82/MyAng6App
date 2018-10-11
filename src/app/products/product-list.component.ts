@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {IProduct} from './product'
+import {ProductService} from './product.service'
 
 @Component({
     selector:'pm-products',
@@ -11,38 +12,41 @@ export class ProductListComponent implements OnInit{
     panelTitle: string = 'Product List';
     imgWidth: number = 50;
     imgMargin: number = 2;
-    listFilter: string = 'cart';
-    products: IProduct[] =[{
-        "productId": 1,
-        "productName": "Leaf Rake",
-        "productCode": "GDN-0011",
-        "releaseDate": "March 19, 2016",
-        "description": "Leaf rake with 48-inch wooden handle.",
-        "price": 19.95,
-        "starRating": 5,
-        "imageUrl": "http://openclipart.org/image/300px/svg_to_png/26215/Anonymous_Leaf_Rake.png"
-    },
-    {
-        "productId": 2,
-        "productName": "Garden Cart",
-        "productCode": "GDN-0023",
-        "releaseDate": "March 18, 2016",
-        "description": "15 gallon capacity rolling garden cart",
-        "price": 32.99,
-        "starRating": 4.2,
-        "imageUrl": "http://openclipart.org/image/300px/svg_to_png/58471/garden_cart.png"
-    }] ;
+    _listFilter: string = 'cart';
+    products: IProduct[] =[] ;
     showImage: boolean = false;
+    filteredProducts: IProduct[];
+
+    get listFilter(): string{
+      return this._listFilter;
+    }
+
+    set listFilter(value:string) {
+       this._listFilter = value;
+       this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
+    }
+
     toggleImage():void {
         this.showImage = !this.showImage;
     }
 
     ngOnInit():void{
-        console.log('In OnInit');
+        this.products = this.productService.getProducts();
+        this.filteredProducts = this.products;
     }
 
     onRatingClicked(message:string):void{
       this.panelTitle = "Product List: " + message;
+    }
+
+    performFilter(filterBy: string): IProduct[]{
+      filterBy = filterBy.toLowerCase();
+      return this.products.filter((product: IProduct) => product.productName.toLocaleLowerCase().lastIndexOf(filterBy) !== -1);
+    }
+
+//
+    constructor (private productService: ProductService){
+
     }
 
   }
