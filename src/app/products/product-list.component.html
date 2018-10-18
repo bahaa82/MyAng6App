@@ -1,8 +1,8 @@
-<div class="panel paner-primary">
-<div class="panel-heading">
+<div class="card">
+<div class="card-header">
     {{panelTitle}}
 </div>
-<div class="panel-body">
+<div class="card-body">
     <div class="row">
         <div class="col-md-2">Filter by: </div>
         <div class="col-md-4">
@@ -49,7 +49,12 @@
                                     [src]='product.imageUrl'
                                     [style.width.px]='imgWidth'
                                     [style.margin.px]='imgMargin'></td>
-                          <td>{{product.productName}}</td>
+                          <td>
+                            <a [routerLink]="['/products',product.productId]">
+                              {{product.productName}}
+
+                            </a>
+                          </td>
                           <td>{{product.productCode }}</td>
                          <td>{{product.releaseDate}}</td>
                           <td>{{product.price | currency:'USD':'Code':'1.2-2'}}</td>
