@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductFilterPipe } from './product-filter.pipe';
 import { RouterModule } from '@angular/router';
 import { ProductDetailGuard } from './product-detail.guard';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ProductDetailGuard } from './product-detail.guard';
     RouterModule.forChild([
       { path: 'products', component: ProductListComponent },
       { path: 'products/:id',canActivate:[ProductDetailGuard], component: ProductDetailComponent },
-    ])
+    ]),
+    SharedModule
 
   ],
   declarations: [
