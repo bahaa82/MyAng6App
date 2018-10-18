@@ -10,9 +10,10 @@ import {ProductService} from './product.service'
 })
 export class ProductListComponent implements OnInit{
     panelTitle: string = 'Product List';
+    errorMessage: string;
     imgWidth: number = 50;
     imgMargin: number = 2;
-    _listFilter: string = 'cart';
+    _listFilter: string ;
     products: IProduct[] =[] ;
     showImage: boolean = false;
     filteredProducts: IProduct[];
@@ -31,8 +32,14 @@ export class ProductListComponent implements OnInit{
     }
 
     ngOnInit():void{
-        this.products = this.productService.getProducts();
-        this.filteredProducts = this.products;
+       this.productService.getProducts().subscribe(
+         products=> {
+           this.products = products;
+           this.filteredProducts = this.products;
+          },
+         error=> this.errorMessage = <any>error
+              );
+
     }
 
     onRatingClicked(message:string):void{
